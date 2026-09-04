@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Travel Guides | Falak & Kartik</title>
+
+    <meta
+        name="description"
+        content="Travel guides, itineraries, tips and experiences from Falak & Kartik."
+    >
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS -->
+    <link
+        rel="stylesheet"
+        href="Travel_guides.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<!-- =====================================================
+     GLOBAL NAVIGATION
+===================================================== -->
+
+<header class="header-area">
+
+    <div class="header-container">
+
+        <nav class="main-nav">
+
+            <!-- Logo -->
+            <a href="index.html" class="site-logo">
+                Falak and Kartik
+            </a>
+
+            <!-- Navigation -->
+            <ul class="nav">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">
+                        About Us
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Travel guides.html" class="active">
+                        Guides
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Staycation.html">
+                        Staycation
+                    </a>
+                </li>
+
+                <li>
+                    <a href="reservation.html">
+                        Our Gadgets
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- Mobile Menu -->
+            <a class="menu-trigger" href="javascript:void(0);">
+                <span></span>
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MOBILE NAVIGATION
+===================================================== -->
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="guide-hero">
+
+    <div class="hero-content">
+
+        <span class="eyebrow">
+            TIPS. ITINERARIES. EXPERIENCES.
+        </span>
+
+
+        <h1>
+            Travel Guides<br>
+            That Inspire
+        </h1>
+
+
+        <p>
+            In-depth guides, curated itineraries and
+            practical tips from the places we've explored.
+        </p>
+
+
+        <button
+            class="primary-button"
+            id="browseGuidesButton"
+        >
+            Browse All Guides
+            <span>→</span>
+        </button>
+
+    </div>
+
+
+    <div class="hero-image">
+
+        <img
+            src="assets/images/travel-guides-hero.jpg"
+            alt="Travel destination"
+        >
+
+        <div class="hero-quote">
+
+            <span>
+                Collect moments,
+            </span>
+
+            <span>
+                not things.
+            </span>
+
+            <small>
+                — F & K
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH + DESTINATION INTRO
+===================================================== -->
+
+<section
+    class="destination-section"
+    id="destinationSection"
+>
+
+
+    <div class="section-intro">
+
+        <span class="section-eyebrow">
+            EXPLORE OUR GUIDES
+        </span>
+
+        <h2>
+            Choose Your Destination
+        </h2>
+
+        <p>
+            Where do you want to go next?
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="guide-search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            type="text"
+            id="guideSearch"
+            placeholder="Search destinations, guides, topics..."
+            autocomplete="off"
+        >
+
+        <button
+            id="clearSearch"
+            aria-label="Clear search"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <!-- FILTERS -->
+
+    <div class="guide-filters">
+
+        <button
+            class="filter-button active"
+            data-region="all"
+        >
+            All Guides
+        </button>
+
+        <button
+            class="filter-button"
+            data-region="canada"
+        >
+            Canada
+        </button>
+
+        <button
+            class="filter-button"
+            data-region="usa"
+        >
+            USA
+        </button>
+
+        <button
+            class="filter-button"
+            data-region="international"
+        >
+            International
+        </button>
+
+    </div>
+
+
+</section>
+
+
+<!-- =====================================================
+     CANADA
+===================================================== -->
+
+<section
+    class="region-section"
+    data-region-section="canada"
+>
+
+    <div class="region-intro">
+
+        <div class="region-symbol">
+            <i class="fa-solid fa-mountain-sun"></i>
+        </div>
+
+        <span>
+            TRUE NORTH, ENDLESS VIEWS
+        </span>
+
+        <h2>
+            Canada
+        </h2>
+
+        <p>
+            Majestic mountains, turquoise lakes and
+            charming cities. Explore the very best
+            of Canada.
+        </p>
+
+        <button
+            class="region-button"
+            data-region="canada"
+        >
+            Explore Canada Guides
+            <span>→</span>
+        </button>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+
+        <a
+    href="banff.html"
+    class="destination-card"
+    data-region="canada"
+    data-destination="banff"
+    data-search="banff alberta canada mountains moraine lake"
+>
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/banff.jpg"
+                    alt="Banff"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Banff
+                </h3>
+
+                <span class="destination-location">
+                    Alberta
+                </span>
+
+                <p>
+                    Turquoise lakes, stunning peaks
+                    and unforgettable adventures.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span>
+                        12 guides
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+            </div>
+
+</a>
+
+        <article
+            class="destination-card"
+            data-region="canada"
+            data-destination="jasper"
+            data-search="jasper alberta canada national park lakes"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/jasper.jpg"
+                    alt="Jasper"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Jasper
+                </h3>
+
+                <span class="destination-location">
+                    Alberta
+                </span>
+
+                <p>
+                    Wild beauty, serene landscapes
+                    and starry skies.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span>
+                        10 guides
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="canada"
+            data-destination="vancouver"
+            data-search="vancouver british columbia canada city coast"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/vancouver.jpg"
+                    alt="Vancouver"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Vancouver
+                </h3>
+
+                <span class="destination-location">
+                    British Columbia
+                </span>
+
+                <p>
+                    City vibes, coastal views and
+                    local favourites.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span>
+                        8 guides
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="canada"
+            data-destination="yoho"
+            data-search="yoho british columbia canada waterfalls lakes"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/yoho.jpg"
+                    alt="Yoho"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Yoho & Beyond
+                </h3>
+
+                <span class="destination-location">
+                    British Columbia
+                </span>
+
+                <p>
+                    Hidden gems, scenic drives
+                    and epic hikes.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span>
+                        6 guides
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="canada"
+            data-destination="other-canada"
+            data-search="canada ontario toronto other destinations"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/other-canada.jpg"
+                    alt="Canada"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Other Canada
+                </h3>
+
+                <span class="destination-location">
+                    Canada
+                </span>
+
+                <p>
+                    More incredible places across
+                    this beautiful country.
+                </p>
+
+                <div class="card-bottom">
+
+                    <span>
+                        7 guides
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     USA
+===================================================== -->
+
+<section
+    class="region-section"
+    data-region-section="usa"
+>
+
+    <div class="region-intro">
+
+        <div class="region-symbol">
+            <i class="fa-solid fa-mountain"></i>
+        </div>
+
+        <span>
+            WIDE OPEN SPACES
+        </span>
+
+        <h2>
+            USA
+        </h2>
+
+        <p>
+            From iconic national parks to vibrant
+            cities and scenic road trips across the USA.
+        </p>
+
+        <button
+            class="region-button"
+            data-region="usa"
+        >
+            Explore USA Guides
+            <span>→</span>
+        </button>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+        <article
+            class="destination-card"
+            data-region="usa"
+            data-destination="arizona"
+            data-search="arizona usa desert road trip grand canyon"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/arizona.jpg"
+                    alt="Arizona"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Arizona
+                </h3>
+
+                <span class="destination-location">
+                    USA
+                </span>
+
+                <p>
+                    Desert sunsets, scenic drives
+                    and hidden gems.
+                </p>
+
+                <div class="card-bottom">
+                    <span>12 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="usa"
+            data-destination="utah"
+            data-search="utah usa national parks zion bryce arches road trip"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/utah.jpg"
+                    alt="Utah"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Utah
+                </h3>
+
+                <span class="destination-location">
+                    USA
+                </span>
+
+                <p>
+                    National parks, epic landscapes
+                    and adventure.
+                </p>
+
+                <div class="card-bottom">
+                    <span>15 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="usa"
+            data-destination="california"
+            data-search="california usa yosemite road trip coast"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/california.jpg"
+                    alt="California"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    California
+                </h3>
+
+                <span class="destination-location">
+                    USA
+                </span>
+
+                <p>
+                    Coastal highways, iconic cities
+                    and unforgettable views.
+                </p>
+
+                <div class="card-bottom">
+                    <span>14 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="usa"
+            data-destination="other-states"
+            data-search="usa states national parks travel"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/other-usa.jpg"
+                    alt="USA"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Other States
+                </h3>
+
+                <span class="destination-location">
+                    USA
+                </span>
+
+                <p>
+                    More destinations across
+                    the USA.
+                </p>
+
+                <div class="card-bottom">
+                    <span>9 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="usa"
+            data-destination="city-guides"
+            data-search="usa cities las vegas city guide"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/city-guides.jpg"
+                    alt="USA city"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    City Guides
+                </h3>
+
+                <span class="destination-location">
+                    USA
+                </span>
+
+                <p>
+                    City travel guides and
+                    weekend getaways.
+                </p>
+
+                <div class="card-bottom">
+                    <span>6 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTERNATIONAL
+===================================================== -->
+
+<section
+    class="region-section"
+    data-region-section="international"
+>
+
+    <div class="region-intro">
+
+        <div class="region-symbol">
+            <i class="fa-solid fa-earth-americas"></i>
+        </div>
+
+        <span>
+            BEYOND BORDERS
+        </span>
+
+        <h2>
+            International
+        </h2>
+
+        <p>
+            Explore beautiful places around the
+            world and discover new cultures.
+        </p>
+
+        <button
+            class="region-button"
+            data-region="international"
+        >
+            Explore International Guides
+            <span>→</span>
+        </button>
+
+    </div>
+
+
+    <div class="destination-grid">
+
+        <article
+            class="destination-card"
+            data-region="international"
+            data-destination="europe"
+            data-search="europe travel europe guide"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/europe.jpg"
+                    alt="Europe"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Europe
+                </h3>
+
+                <span class="destination-location">
+                    Europe
+                </span>
+
+                <p>
+                    Historic towns, stunning scenery
+                    and memorable experiences.
+                </p>
+
+                <div class="card-bottom">
+                    <span>18 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="international"
+            data-destination="asia"
+            data-search="asia travel japan thailand bali asia"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/asia.jpg"
+                    alt="Asia"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Asia
+                </h3>
+
+                <span class="destination-location">
+                    Asia
+                </span>
+
+                <p>
+                    Vibrant cities, rich culture and
+                    breathtaking landscapes.
+                </p>
+
+                <div class="card-bottom">
+                    <span>14 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="international"
+            data-destination="africa"
+            data-search="africa kenya safari travel"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/africa.jpg"
+                    alt="Africa"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Africa
+                </h3>
+
+                <span class="destination-location">
+                    Africa
+                </span>
+
+                <p>
+                    Wild safaris, beaches and
+                    unforgettable adventures.
+                </p>
+
+                <div class="card-bottom">
+                    <span>9 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="international"
+            data-destination="oceania"
+            data-search="australia new zealand oceania travel"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/oceania.jpg"
+                    alt="Oceania"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Oceania
+                </h3>
+
+                <span class="destination-location">
+                    Oceania
+                </span>
+
+                <p>
+                    Natural wonders, coastal routes
+                    and island escapes.
+                </p>
+
+                <div class="card-bottom">
+                    <span>7 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <article
+            class="destination-card"
+            data-region="international"
+            data-destination="other-places"
+            data-search="international world travel destinations"
+        >
+
+            <div class="destination-image">
+
+                <img
+                    src="assets/images/other-international.jpg"
+                    alt="International destinations"
+                >
+
+                <span class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </span>
+
+            </div>
+
+            <div class="destination-content">
+
+                <h3>
+                    Other Places
+                </h3>
+
+                <span class="destination-location">
+                    Worldwide
+                </span>
+
+                <p>
+                    More incredible countries
+                    and places to explore.
+                </p>
+
+                <div class="card-bottom">
+                    <span>6 guides</span>
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SEARCH RESULTS / GUIDES
+===================================================== -->
+
+<section
+    class="guides-library"
+    id="guidesLibrary"
+>
+
+    <div class="library-heading">
+
+        <div>
+
+            <span class="section-eyebrow">
+                STORIES FROM THE ROAD
+            </span>
+
+            <h2>
+                Popular Guides
+            </h2>
+
+        </div>
+
+        <span
+            id="resultCount"
+            class="result-count"
+        ></span>
+
+    </div>
+
+
+    <div
+        class="guide-grid"
+        id="guideGrid"
+    >
+
+
+        <!-- GUIDE 1 -->
+
+        <article
+            class="guide-card"
+            data-region="canada"
+            data-search="banff ultimate guide canada national park moraine lake itinerary"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/banff-guide.jpg"
+                    alt="Banff guide"
+                >
+
+                <span>
+                    CANADA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    The Ultimate Guide to Banff National Park
+                </h3>
+
+                <p>
+                    Lakes, viewpoints, hikes and everything
+                    you need for your Banff adventure.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        12 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 2 -->
+
+        <article
+            class="guide-card"
+            data-region="usa"
+            data-search="utah national parks itinerary zion bryce arches road trip"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/utah-guide.jpg"
+                    alt="Utah guide"
+                >
+
+                <span>
+                    USA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    5 Day Utah National Parks Itinerary
+                </h3>
+
+                <p>
+                    The ultimate road trip through Utah's
+                    most spectacular national parks.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        10 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 3 -->
+
+        <article
+            class="guide-card"
+            data-region="usa"
+            data-search="arizona road trip scenic drives grand canyon sedona"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/arizona-guide.jpg"
+                    alt="Arizona guide"
+                >
+
+                <span>
+                    USA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    Arizona Road Trip: Scenic Drives & Stops
+                </h3>
+
+                <p>
+                    Scenic roads, desert landscapes and
+                    unforgettable stops.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        11 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 4 -->
+
+        <article
+            class="guide-card"
+            data-region="canada"
+            data-search="jasper canada itinerary national park lakes"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/jasper-guide.jpg"
+                    alt="Jasper guide"
+                >
+
+                <span>
+                    CANADA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    Jasper National Park Travel Guide
+                </h3>
+
+                <p>
+                    Discover the lakes, trails and scenic
+                    viewpoints of Jasper.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        10 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 5 -->
+
+        <article
+            class="guide-card"
+            data-region="canada"
+            data-search="vancouver canada city guide itinerary"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/vancouver-guide.jpg"
+                    alt="Vancouver guide"
+                >
+
+                <span>
+                    CANADA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    2 Day Vancouver City Guide
+                </h3>
+
+                <p>
+                    The best neighbourhoods, viewpoints,
+                    food and experiences.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        8 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 6 -->
+
+        <article
+            class="guide-card"
+            data-region="international"
+            data-search="international europe travel guide"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/europe-guide.jpg"
+                    alt="Europe guide"
+                >
+
+                <span>
+                    INTERNATIONAL
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    Our Favourite European Escapes
+                </h3>
+
+                <p>
+                    Beautiful cities, hidden corners and
+                    unforgettable experiences.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        14 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 7 -->
+
+        <article
+            class="guide-card"
+            data-region="usa"
+            data-search="california road trip usa yosemite"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/california-guide.jpg"
+                    alt="California guide"
+                >
+
+                <span>
+                    USA
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    California Road Trip Guide
+                </h3>
+
+                <p>
+                    Coastal roads, national parks and
+                    unforgettable California stops.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        13 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- GUIDE 8 -->
+
+        <article
+            class="guide-card"
+            data-region="international"
+            data-search="africa kenya safari travel guide"
+        >
+
+            <div class="guide-image">
+
+                <img
+                    src="assets/images/africa-guide.jpg"
+                    alt="Africa guide"
+                >
+
+                <span>
+                    INTERNATIONAL
+                </span>
+
+            </div>
+
+            <div class="guide-content">
+
+                <h3>
+                    Planning an African Adventure
+                </h3>
+
+                <p>
+                    Travel inspiration, planning tips and
+                    unforgettable experiences.
+                </p>
+
+                <div class="guide-meta">
+                    <span>
+                        <i class="fa-regular fa-clock"></i>
+                        12 min read
+                    </span>
+
+                    <span>→</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <div
+        class="no-results"
+        id="noResults"
+    >
+        <i class="fa-regular fa-compass"></i>
+
+        <h3>
+            No guides found
+        </h3>
+
+        <p>
+            Try another destination or search term.
+        </p>
+    </div>
+
+
+    <button
+        class="load-more"
+        id="loadMore"
+    >
+        Load More Guides
+        <span>↓</span>
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+
+        <div class="footer-about">
+
+            <a href="index.html" class="footer-logo">
+                Falak & Kartik
+            </a>
+
+            <h3>
+                Travel. Explore. Inspire.
+            </h3>
+
+            <p>
+                We're Falak & Kartik, Toronto-based
+                travel creators sharing our adventures,
+                tips and guides to inspire your next journey.
+            </p>
+
+            <div class="footer-travel-icons">
+
+                <i class="fa-solid fa-camera"></i>
+                <i class="fa-solid fa-location-dot"></i>
+                <i class="fa-solid fa-suitcase"></i>
+                <i class="fa-regular fa-compass"></i>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <div class="footer-heading-line"></div>
+
+            <a href="index.html">
+                <i class="fa-solid fa-angle-right"></i>
+                Home
+            </a>
+
+            <a href="destinations.html">
+                <i class="fa-solid fa-angle-right"></i>
+                Destinations
+            </a>
+
+            <a href="travel-guides.html">
+                <i class="fa-solid fa-angle-right"></i>
+                Travel Guides
+            </a>
+
+            <a href="blog.html">
+                <i class="fa-solid fa-angle-right"></i>
+                Blog
+            </a>
+
+            <a href="about.html">
+                <i class="fa-solid fa-angle-right"></i>
+                About Us
+            </a>
+
+            <a href="mailto:falakandkartik@gmail.com">
+                <i class="fa-solid fa-angle-right"></i>
+                Contact Us
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Top Destinations
+            </h3>
+
+            <div class="footer-heading-line"></div>
+
+            <a href="#">
+                <i class="fa-solid fa-location-dot"></i>
+                Banff, Canada
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-location-dot"></i>
+                Jasper, Canada
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-location-dot"></i>
+                Vancouver, Canada
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-location-dot"></i>
+                Utah, USA
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-location-dot"></i>
+                Arizona, USA
+            </a>
+
+        </div>
+
+
+        <div class="footer-column footer-social">
+
+            <h3>
+                Let's Stay Connected
+            </h3>
+
+            <div class="footer-heading-line"></div>
+
+            <p>
+                Follow us on social media and
+                never miss an adventure!
+            </p>
+
+
+            <div class="footer-social-links">
+
+                <a
+                    href="https://www.instagram.com/falakandkartik/"
+                    target="_blank"
+                >
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+
+                <a
+                    href="#"
+                    target="_blank"
+                >
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+            </div>
+
+
+            <div class="social-labels">
+
+                <strong>
+                    Instagram
+                </strong>
+
+                <strong>
+                    Facebook
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <a
+            href="mailto:falakandkartik@gmail.com"
+        >
+            <i class="fa-solid fa-paper-plane"></i>
+
+            falakandkartik@gmail.com
+
+        </a>
+
+
+        <span>
+            <i class="fa-solid fa-heart"></i>
+
+            Thank you for being part of our journey!
+
+        </span>
+
+
+        <span>
+            © 2026 Falak & Kartik.
+            All rights reserved.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="travel-guides.js"></script>
+
+</body>
+
+</html>

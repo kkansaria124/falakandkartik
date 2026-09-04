@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Staycations & Stays | Falak & Kartik</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+    <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+</head>
+
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuTrigger = document.querySelector(".menu-trigger");
+    const nav = document.querySelector(".main-nav .nav");
+
+    if (!menuTrigger || !nav) {
+        return;
+    }
+
+    menuTrigger.addEventListener("click", function () {
+
+        menuTrigger.classList.toggle("active");
+
+        nav.classList.toggle("active");
+
+    });
+
+
+    /* Close menu after clicking a link */
+
+    const navLinks = nav.querySelectorAll("a");
+
+    navLinks.forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            menuTrigger.classList.remove("active");
+
+            nav.classList.remove("active");
+
+        });
+
+    });
+
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /*
+    ============================================
+    LOCATION DATA
+    ============================================
+    
+    These are AREA pins rather than exact
+    property addresses.
+    */
+
+    const locations = {
+
+        toronto: {
+            name: "Toronto & GTA",
+            count: "5 Stays",
+            lat: 43.6532,
+            lng: -79.3832,
+
+            stays: [
+                "The Andmore House",
+                "Hotel X Toronto",
+                "Toronto Stay"
+            ]
+        },
+
+
+        muskoka: {
+            name: "Muskoka",
+            count: "3 Stays",
+            lat: 45.038,
+            lng: -79.307,
+
+            stays: [
+                "Touchstone Resort",
+                "Lakeside Getaway",
+                "Muskoka Cabin"
+            ]
+        },
+
+
+        "georgian-bay": {
+            name: "Georgian Bay",
+            count: "2 Stays",
+            lat: 44.82,
+            lng: -80.04,
+
+            stays: [
+                "Sunset Shores Airbnb",
+                "Georgian Bay Retreat"
+            ]
+        },
+
+
+        niagara: {
+            name: "Niagara Region",
+            count: "2 Stays",
+            lat: 43.16,
+            lng: -79.08,
+
+            stays: [
+                "White Oaks Resort",
+                "Niagara Stay"
+            ]
+        },
+
+
+        kawartha: {
+            name: "Kawartha Lakes",
+            count: "2 Stays",
+            lat: 44.35,
+            lng: -78.74,
+
+            stays: [
+                "Lakeside Getaway",
+                "Kawartha Cottage"
+            ]
+        },
+
+
+        other: {
+            name: "Other Destinations",
+            count: "3 Stays",
+            lat: 44.3,
+            lng: -81.0,
+
+            stays: [
+                "Unique Stay",
+                "Forest Retreat",
+                "Lake House"
+            ]
+        }
+
+    };
+
+
+    /*
+    ============================================
+    CREATE MAP
+    ============================================
+    */
+
+    const map = L.map("stayMap", {
+        scrollWheelZoom: false
+    });
+
+
+    /*
+    ============================================
+    MAP TILES
+    ============================================
+    */
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+                '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(map);
+
+
+    /*
+    ============================================
+    INITIAL MAP POSITION
+    ============================================
+    */
+
+    map.setView(
+        [44.3, -79.5],
+        7
+    );
+
+
+    /*
+    ============================================
+    MARKERS
+    ============================================
+    */
+
+    const markers = {};
+
+
+    Object.keys(locations).forEach(function (key) {
+
+        const location = locations[key];
+
+
+        const marker = L.marker([
+            location.lat,
+            location.lng
+        ]).addTo(map);
+
+
+        markers[key] = marker;
+
+
+        marker.bindPopup(`
+            
+            <div class="map-popup">
+
+                <h3>
+                    ${location.name}
+                </h3>
+
+                <p>
+                    ${location.count}
+                </p>
+
+                <button
+                    type="button"
+                    onclick="viewLocationStays('${key}')"
+                >
+                    View Stays →
+                </button>
+
+            </div>
+
+        `);
+
+
+        /*
+        Click marker
+        */
+
+        marker.on("click", function () {
+
+            activateLocation(key, false);
+
+        });
+
+    });
+
+
+    /*
+    ============================================
+    LOCATION ROWS
+    ============================================
+    */
+
+    const locationRows =
+        document.querySelectorAll(".location-row");
+
+
+    locationRows.forEach(function (row) {
+
+        row.addEventListener("click", function () {
+
+            const locationKey =
+                row.dataset.location;
+
+            activateLocation(
+                locationKey,
+                true
+            );
+
+        });
+
+    });
+
+
+    /*
+    ============================================
+    ACTIVATE LOCATION
+    ============================================
+    */
+
+    function activateLocation(
+        locationKey,
+        openPopup
+    ) {
+
+        const location =
+            locations[locationKey];
+
+        const marker =
+            markers[locationKey];
+
+
+        if (!location || !marker) {
+            return;
+        }
+
+
+        /*
+        Highlight row
+        */
+
+        locationRows.forEach(function (row) {
+
+            row.classList.remove("active");
+
+        });
+
+
+        const selectedRow =
+            document.querySelector(
+                `[data-location="${locationKey}"]`
+            );
+
+
+        if (selectedRow) {
+
+            selectedRow.classList.add("active");
+
+        }
+
+
+        /*
+        Move map
+        */
+
+        map.flyTo(
+            [
+                location.lat,
+                location.lng
+            ],
+            9,
+            {
+                duration: 0.8
+            }
+        );
+
+
+        /*
+        Open popup
+        */
+
+        if (openPopup) {
+
+            marker.openPopup();
+
+        }
+
+    }
+
+
+    /*
+    ============================================
+    VIEW STAYS
+    ============================================
+    */
+
+    window.viewLocationStays = function (locationKey) {
+
+        const location =
+            locations[locationKey];
+
+
+        if (!location) {
+            return;
+        }
+
+
+        /*
+        Highlight selected location
+        */
+
+        activateLocation(
+            locationKey,
+            false
+        );
+
+
+        /*
+        Find stay cards
+        */
+
+        const stayItems =
+            document.querySelectorAll(".stay-item");
+
+
+        /*
+        Hide cards that don't belong
+        to this location.
+        
+        This expects cards to have:
+        
+        data-location="muskoka"
+        
+        */
+
+        stayItems.forEach(function (item) {
+
+            if (
+                item.dataset.location === locationKey
+            ) {
+
+                item.style.display = "block";
+
+            } else {
+
+                item.style.display = "none";
+
+            }
+
+        });
+
+
+        /*
+        Scroll to stays
+        */
+
+        const staysSection =
+            document.getElementById("stays");
+
+
+        if (staysSection) {
+
+            staysSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    };
+
+
+    /*
+    ============================================
+    DEFAULT LOCATION
+    ============================================
+    */
+
+    activateLocation(
+        "toronto",
+        false
+    );
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const filterButtons = document.querySelectorAll(".filter");
+    const stayItems = Array.from(document.querySelectorAll(".stay-item"));
+
+    const loadMoreContainer =
+        document.getElementById("loadMoreContainer");
+
+    const loadMoreBtn =
+        document.getElementById("loadMoreBtn");
+
+    const itemsPerLoad = 8;
+
+    let currentFilter = "all";
+    let visibleCount = itemsPerLoad;
+
+
+    // Get stays for selected category
+    function getFilteredItems() {
+
+        if (currentFilter === "all") {
+            return stayItems;
+        }
+
+        return stayItems.filter(function (item) {
+
+            return item.dataset.category === currentFilter;
+
+        });
+
+    }
+
+
+    // Display stays
+    function displayItems() {
+
+        const filteredItems = getFilteredItems();
+
+
+        // Hide every card
+        stayItems.forEach(function (item) {
+
+            item.style.display = "none";
+
+        });
+
+
+        // Show first 8, then 16, then 24...
+        filteredItems.forEach(function (item, index) {
+
+            if (index < visibleCount) {
+
+                item.style.display = "block";
+
+            }
+
+        });
+
+
+        // Show Load More only if more items exist
+        if (filteredItems.length > visibleCount) {
+
+            loadMoreContainer.style.display = "block";
+
+        } else {
+
+            loadMoreContainer.style.display = "none";
+
+        }
+
+    }
+
+
+    // Filter buttons
+    filterButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            // Remove active class
+            filterButtons.forEach(function (btn) {
+
+                btn.classList.remove("active");
+
+            });
+
+
+            // Add active class
+            button.classList.add("active");
+
+
+            // Get selected category
+            currentFilter = button.dataset.filter;
+
+
+            // Reset to first 8
+            visibleCount = itemsPerLoad;
+
+
+            // Update cards
+            displayItems();
+
+        });
+
+    });
+
+
+    // Load More
+    loadMoreBtn.addEventListener("click", function () {
+
+        visibleCount += itemsPerLoad;
+
+        displayItems();
+
+    });
+
+
+    // Initial display
+    displayItems();
+
+});
+
+</script>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<!-- =========================
+     GLOBAL NAVIGATION
+========================= -->
+
+<header class="header-area">
+
+    <div class="header-container">
+
+        <nav class="main-nav">
+
+            <!-- Logo -->
+            <a href="index.html" class="site-logo">
+                Falak and Kartik
+            </a>
+
+            <!-- Navigation -->
+            <ul class="nav">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">
+                        About Us
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Travel guides.html">
+                        Guides
+                    </a>
+                </li>
+
+                <li>
+                    <a href="Staycation.html" class="active">
+                        Staycation
+                    </a>
+                </li>
+
+                <li>
+                    <a href="reservation.html">
+                        Our Gadgets
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- Mobile Menu -->
+            <a class="menu-trigger" href="javascript:void(0);">
+                <span></span>
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="eyebrow">
+            OUR STAYS
+        </span>
+
+        <h1>
+            Staycations<br>
+            <span>& Stays</span>
+        </h1>
+
+        <p>
+            Handpicked stays. Memorable experiences.
+            Places we've loved, explored & shared.
+        </p>
+
+        <a href="#stays" class="primary-btn">
+            Explore Our Stays
+            <span>→</span>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FEATURED COLLABORATIONS
+========================= -->
+
+<section class="section featured-section">
+
+    <div class="section-heading">
+
+        <span></span>
+
+        <h2>Featured Collaborations</h2>
+
+        <span></span>
+
+    </div>
+
+
+    <div class="featured-grid">
+
+
+        <!-- Card 1 -->
+
+        <article class="stay-card featured-card">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80"
+                    alt="Luxury resort"
+                >
+
+            </div>
+
+            <div class="card-content">
+
+                <span class="location">
+                    ♧ Parry Sound, ON
+                </span>
+
+                <h3>
+                    Jolly Rogers Inn & Resort
+                </h3>
+
+                <a href="#" class="card-link">
+                    View Experience
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- Card 2 -->
+
+        <article class="stay-card featured-card">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80"
+                    alt="Waterfront cabin"
+                >
+
+            </div>
+
+            <div class="card-content">
+
+                <span class="location">
+                    ♧ Georgian Bay, ON
+                </span>
+
+                <h3>
+                    Sunset Shores Airbnb
+                </h3>
+
+                <a href="#" class="card-link">
+                    View Experience
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- Card 3 -->
+
+        <article class="stay-card featured-card">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80"
+                    alt="Boutique hotel"
+                >
+
+            </div>
+
+            <div class="card-content">
+
+                <span class="location">
+                    ♧ Niagara-on-the-Lake, ON
+                </span>
+
+                <h3>
+                    Prince of Wales Hotel
+                </h3>
+
+                <a href="#" class="card-link">
+                    View Experience
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+
+        <!-- Card 4 -->
+
+        <article class="stay-card featured-card">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=900&q=80"
+                    alt="Forest cabin"
+                >
+
+            </div>
+
+            <div class="card-content">
+
+                <span class="location">
+                    ♧ Muskoka, ON
+                </span>
+
+                <h3>
+                    Touchstone Resort
+                </h3>
+
+                <a href="#" class="card-link">
+                    View Experience
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ALL STAYS
+========================= -->
+
+<section class="section stays-section" id="stays">
+
+    <div class="section-heading">
+
+        <span></span>
+
+        <h2>All Our Stays</h2>
+
+        <span></span>
+
+    </div>
+
+
+    <!-- Filters -->
+
+    <div class="filters">
+
+    <button class="filter active" data-filter="all">
+        All
+    </button>
+
+    <button class="filter" data-filter="hotels">
+        Hotels
+    </button>
+
+    <button class="filter" data-filter="resorts">
+        Resorts
+    </button>
+
+    <button class="filter" data-filter="airbnb">
+        Airbnb
+    </button>
+
+    <button class="filter" data-filter="cottages">
+        Cottages
+    </button>
+
+    <button class="filter" data-filter="unique">
+        Unique Stays
+    </button>
+
+</div>
+
+
+    <!-- Stay Grid -->
+
+    <div class="stays-grid">
+
+
+        <!-- Stay -->
+
+<article class="stay-card stay-item" data-category="hotels" data-location="toronto"
+>
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplashh.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80"
+                    alt="Hotel room"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Toronto, ON
+                </span>
+
+                <h3>
+                    The Andmore House
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80"
+                    alt="Resort pool"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Niagara Falls, ON
+                </span>
+
+                <h3>
+                    White Oaks Resort
+                </h3>
+
+            </div>
+
+        </article>
+
+        <article class="stay-card stay-item" data-category="airbnb">
+
+    <div class="card-image">
+        <img
+            src="images/my-airbnb.jpg"
+            alt="My Airbnb"
+        >
+    </div>
+
+    <div class="small-card-content">
+
+        <span class="location">
+            Muskoka, ON
+        </span>
+
+        <h3>
+            My Beautiful Airbnb
+        </h3>
+
+    </div>
+
+</article>
+
+
+<article class="stay-card stay-item" data-category="hotels" data-location="muskoka">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=800&q=80"
+                    alt="Luxury chalet"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Collingwood, ON
+                </span>
+
+                <h3>
+                    Luxury Blue Mountain Chalet
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=800&q=80"
+                    alt="Unique stay"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Minden, ON
+                </span>
+
+                <h3>
+                    The Nordic Retreat
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80"
+                    alt="Wooden cabin"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Scottsdale, ON
+                </span>
+
+                <h3>
+                    Cabin by The Creek
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=800&q=80"
+                    alt="Forest cottage"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Haliburton, ON
+                </span>
+
+                <h3>
+                    Pine Point Cottage
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80"
+                    alt="Lakefront getaway"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Kawartha Lakes, ON
+                </span>
+
+                <h3>
+                    Lakeside Getaway
+                </h3>
+
+            </div>
+
+        </article>
+
+
+<article class="stay-card stay-item" data-category="hotels">
+
+    <div class="card-image">
+        <img
+            src="images/my-new-hotel.jpg"
+            alt="My New Hotel"
+        >
+    </div>
+
+    <div class="small-card-content">
+
+        <span class="location">
+            Toronto, ON
+        </span>
+
+        <h3>
+            My New Hotel
+        </h3>
+
+    </div>
+
+</article>
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80"
+                    alt="Luxury hotel room"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Toronto, ON
+                </span>
+
+                <h3>
+                    Hotel X Toronto
+                </h3>
+
+            </div>
+
+        </article>
+
+<article class="stay-card stay-item" data-category="hotels">
+
+            <div class="card-image">
+
+                <img
+                    src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80"
+                    alt="Luxury hotel room"
+                >
+
+            </div>
+
+            <div class="small-card-content">
+
+                <span class="location">
+                    Toronto, ON
+                </span>
+
+                <h3>
+                    Hotel X Toronto
+                </h3>
+
+            </div>
+
+        </article>
+
+
+
+    </div>
+
+
+   <div class="load-more" id="loadMoreContainer">
+
+    <button id="loadMoreBtn" type="button">
+        Load More Stays
+        <span>↓</span>
+    </button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     LOCATION SECTION
+========================= -->
+
+<section class="section location-section" id="locations">
+
+    <div class="section-heading">
+        <span></span>
+        <h2>Explore By Location</h2>
+        <span></span>
+    </div>
+
+    <div class="location-wrapper">
+
+        <!-- INTERACTIVE MAP -->
+        <div class="interactive-map" id="stayMap"></div>
+
+
+        <!-- LOCATION LIST -->
+        <div class="location-list">
+
+            <button
+                class="location-row active"
+                data-location="toronto"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Toronto & GTA</strong>
+
+                <small>5 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+
+            <button
+                class="location-row"
+                data-location="muskoka"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Muskoka</strong>
+
+                <small>3 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+
+            <button
+                class="location-row"
+                data-location="georgian-bay"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Georgian Bay</strong>
+
+                <small>2 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+
+            <button
+                class="location-row"
+                data-location="niagara"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Niagara Region</strong>
+
+                <small>2 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+
+            <button
+                class="location-row"
+                data-location="kawartha"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Kawartha Lakes</strong>
+
+                <small>2 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+
+            <button
+                class="location-row"
+                data-location="other"
+                type="button"
+            >
+                <span class="location-icon">⌂</span>
+
+                <strong>Other Destinations</strong>
+
+                <small>3 Stays</small>
+
+                <span class="location-arrow">→</span>
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     IMPACT
+========================= -->
+
+<section class="impact">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span></span>
+
+            <h2>Our Impact</h2>
+
+            <span></span>
+
+        </div>
+
+
+        <div class="impact-grid">
+
+            <div class="impact-item">
+
+                <strong>11.1K+</strong>
+                <span>Followers</span>
+
+            </div>
+
+
+            <div class="impact-item">
+
+                <strong>2.6M+</strong>
+                <span>Reel Views (90 Days)</span>
+
+            </div>
+
+
+            <div class="impact-item">
+
+                <strong>40K+</strong>
+                <span>Likes</span>
+
+            </div>
+
+
+            <div class="impact-item">
+
+                <strong>61K+</strong>
+                <span>Shares</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     COLLABORATION CTA
+========================= -->
+
+<section class="collaboration">
+
+    <div class="collab-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80"
+            alt="Couple enjoying a travel destination"
+        >
+
+    </div>
+
+
+    <div class="collab-content">
+
+        <span class="eyebrow">
+            LET'S CREATE SOMETHING MEMORABLE
+        </span>
+
+        <h2>
+            Own a beautiful stay?
+            <br>
+            Let's tell your story.
+        </h2>
+
+        <p>
+            We create engaging content that inspires travelers
+            and drives results for your property.
+        </p>
+
+        <a
+    href="mailto:falakandkartik@gmail.com?subject=Collaboration%20Inquiry%20-%20Falak%20%26%20Kartik"
+    class="primary-btn"
+>
+    Work With Us
+    <span>→</span>
+</a>
+<p class="email-note">
+    Or email us directly at
+    <a href="mailto:falakandkartik@gmail.com">
+        falakandkartik@gmail.com
+    </a>
+</p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+
+
+    <!-- FOOTER BOTTOM -->
+
+    <footer class="site-footer">
+
+  <div class="footer-main">
+
+    <!-- =====================
+         LEFT - ABOUT
+    ====================== -->
+    <div class="footer-about">
+
+      <a href="index.html" class="footer-logo">
+        <img src="assets/images/logo.png" alt="Falak & Kartik">
+      </a>
+
+      <p class="footer-tagline">
+        Travel. Explore. Inspire.
+      </p>
+
+      <p class="footer-description">
+        We're Falak & Kartik, Toronto-based travel creators sharing
+        our adventures, tips and guides to inspire your next journey.
+      </p>
+
+      <div class="footer-travel-icons">
+        <span><i class="fa-solid fa-camera"></i></span>
+        <span><i class="fa-solid fa-location-dot"></i></span>
+        <span><i class="fa-solid fa-suitcase"></i></span>
+        <span><i class="fa-regular fa-compass"></i></span>
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         QUICK LINKS
+    ====================== -->
+    <div class="footer-column">
+
+      <h3>Quick Links</h3>
+
+      <div class="footer-heading-line"></div>
+
+      <ul class="footer-links">
+
+        <li>
+          <a href="index.html">
+            <i class="fa-solid fa-angle-right"></i>
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="destinations.html">
+            <i class="fa-solid fa-angle-right"></i>
+            Destinations
+          </a>
+        </li>
+
+        <li>
+          <a href="travel-guides.html">
+            <i class="fa-solid fa-angle-right"></i>
+            Travel Guides
+          </a>
+        </li>
+
+        <li>
+          <a href="blog.html">
+            <i class="fa-solid fa-angle-right"></i>
+            Blog
+          </a>
+        </li>
+
+        <li>
+          <a href="about.html">
+            <i class="fa-solid fa-angle-right"></i>
+            About Us
+          </a>
+        </li>
+
+        <li>
+          <a href="contact.html">
+            <i class="fa-solid fa-angle-right"></i>
+            Contact Us
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- =====================
+         TOP DESTINATIONS
+    ====================== -->
+    <div class="footer-column">
+
+      <h3>Top Destinations</h3>
+
+      <div class="footer-heading-line"></div>
+
+      <ul class="footer-links destination-links">
+
+        <li>
+          <a href="banff.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Banff, Canada
+          </a>
+        </li>
+
+        <li>
+          <a href="jasper.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Jasper, Canada
+          </a>
+        </li>
+
+        <li>
+          <a href="kingston.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Kingston, Canada
+          </a>
+        </li>
+
+        <li>
+          <a href="vancouver.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Vancouver, Canada
+          </a>
+        </li>
+
+        <li>
+          <a href="arizona.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Arizona, USA
+          </a>
+        </li>
+
+        <li>
+          <a href="las-vegas.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Las Vegas, USA
+          </a>
+        </li>
+
+        <li>
+          <a href="california.html">
+            <i class="fa-solid fa-location-dot"></i>
+            California, USA
+          </a>
+        </li>
+
+        <li>
+          <a href="wyoming.html">
+            <i class="fa-solid fa-location-dot"></i>
+            Wyoming, USA
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+    <!-- =====================
+         SOCIAL MEDIA
+    ====================== -->
+    <div class="footer-column footer-social">
+
+      <h3>Let's Stay Connected</h3>
+
+      <div class="footer-heading-line"></div>
+
+      <p class="social-description">
+        Follow us on social media and never
+        miss an adventure!
+      </p>
+
+
+      <div class="footer-social-links">
+
+        <!-- Instagram -->
+        <a
+          href="https://www.instagram.com/falakandkartik/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-social-item instagram"
+        >
+
+          <div class="footer-social-icon">
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+
+          <span>Instagram</span>
+
+        </a>
+
+
+        <!-- Facebook -->
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer-social-item facebook"
+        >
+
+          <div class="footer-social-icon">
+            <i class="fa-brands fa-facebook-f"></i>
+          </div>
+
+          <span>Facebook</span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       FOOTER BOTTOM
+  ========================== -->
+
+  <div class="footer-bottom">
+
+    <!-- Email -->
+    <div class="footer-email">
+
+      <i class="fa-solid fa-paper-plane"></i>
+
+      <a href="mailto:falakandkartik@gmail.com">
+        falakandkartik@gmail.com
+      </a>
+
+    </div>
+
+
+    <!-- Thank You -->
+    <div class="footer-thanks">
+
+      <i class="fa-solid fa-heart"></i>
+
+      <span>
+        Thank you for being part of our journey!
+      </span>
+
+    </div>
+
+
+    <!-- Copyright -->
+    <div class="footer-copyright">
+
+      © 2026 Falak &amp; Kartik.
+      All rights reserved.
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+</body>
+</html>
